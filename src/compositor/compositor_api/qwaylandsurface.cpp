@@ -64,6 +64,7 @@ QT_BEGIN_NAMESPACE
 QWaylandSurfacePrivate::QWaylandSurfacePrivate(wl_client *client, quint32 id, int version, QWaylandCompositor *compositor, QWaylandSurface *surface)
     : QtWayland::Surface(client, id, version, compositor, surface)
     , closing(false)
+    , exposed(true)
     , refCount(1)
     , windowType(QWaylandSurface::WindowType::None)
 {}
@@ -408,6 +409,25 @@ QWaylandSurface *QWaylandSurface::fromResource(::wl_resource *res)
     if (s)
         return s->waylandSurface();
     return Q_NULLPTR;
+}
+
+bool QWaylandSurface::isExposed() const
+{
+    Q_D(const QWaylandSurface);
+    return d->exposed;
+}
+
+void QWaylandSurface::setExposed(bool exposed)
+{
+    Q_D(QWaylandSurface);
+    if (isExposed() != exposed) {
+        d->exposed = exposed;
+
+        QWaylandSurfaceSetExposedOp op(exposed);
+        sendInterfaceOp(op);
+
+        emit exposedChanged();
+    }
 }
 
 void QWaylandSurfacePrivate::setTitle(const QString &title)

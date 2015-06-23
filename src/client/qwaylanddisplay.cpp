@@ -255,7 +255,7 @@ void QWaylandDisplay::registry_global(uint32_t id, const QString &interface, uin
         foreach (QPlatformScreen *screen, screens())
             static_cast<QWaylandScreen *>(screen)->createExtendedOutput();
     } else if (interface == QStringLiteral("qt_surface_extension")) {
-        mWindowExtension.reset(new QtWayland::qt_surface_extension(registry, id, 2));
+        mWindowExtension.reset(new QtWayland::qt_surface_extension(registry, id, 3));
     } else if (interface == QStringLiteral("qt_sub_surface_extension")) {
         mSubSurfaceExtension.reset(new QtWayland::qt_sub_surface_extension(registry, id, 1));
     } else if (interface == QStringLiteral("qt_touch_extension")) {

@@ -38,14 +38,14 @@
  $QT_END_LICENSE$
     </copyright>
 
-    <interface name="qt_surface_extension" version="2">
+    <interface name="qt_surface_extension" version="3">
         <request name="get_extended_surface">
             <arg name="id" type="new_id" interface="qt_extended_surface"/>
             <arg name="surface" type="object" interface="wl_surface"/>
         </request>
     </interface>
 
-    <interface name="qt_extended_surface" version="2">
+    <interface name="qt_extended_surface" version="3">
         <event name="onscreen_visibility">
 	    <arg name="visible" type="int"/>
 	</event>
@@ -94,6 +94,17 @@
         <request name="set_content_orientation_mask" since="2">
             <arg name="orientation" type="int"/>
         </request>
+
+        <!-- Version 3 addition -->
+
+        <enum name="exposure">
+           <entry name="Obscured" value="0"/>
+           <entry name="Exposed" value="1"/>
+        </enum>
+
+        <event name="surface_exposure" since="3">
+            <arg name="exposure" type="int"/>
+        </event>
 
     </interface>
 </protocol>

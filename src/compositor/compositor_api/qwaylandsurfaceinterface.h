@@ -58,6 +58,7 @@ public:
         SetVisibility,
         Resize,
         Ping,
+        SetExposed,
         UserType = 1000
     };
 
@@ -100,6 +101,17 @@ public:
 private:
     quint32 m_serial;
 };
+
+class Q_COMPOSITOR_EXPORT QWaylandSurfaceSetExposedOp : public QWaylandSurfaceOp
+{
+public:
+    QWaylandSurfaceSetExposedOp(bool is_exposed);
+    bool is_exposed() const;
+
+private:
+    bool m_exposed;
+};
+
 
 class Q_COMPOSITOR_EXPORT QWaylandSurfaceInterface
 {

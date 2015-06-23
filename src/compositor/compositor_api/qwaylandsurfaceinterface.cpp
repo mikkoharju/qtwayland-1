@@ -141,3 +141,14 @@ uint32_t QWaylandSurfacePingOp::serial() const
 {
     return m_serial;
 }
+
+QWaylandSurfaceSetExposedOp::QWaylandSurfaceSetExposedOp(bool is_exposed)
+    : QWaylandSurfaceOp(Type::SetExposed)
+    , m_exposed(is_exposed)
+{
+}
+
+bool QWaylandSurfaceSetExposedOp::is_exposed() const
+{
+    return m_exposed;
+}

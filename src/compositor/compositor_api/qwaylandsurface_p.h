@@ -64,6 +64,7 @@ public:
     void setClassName(const QString &className);
 
     bool closing;
+    bool exposed;
     int refCount;
     QWaylandSurface::WindowType windowType;
     QList<QWaylandSurfaceView *> views;

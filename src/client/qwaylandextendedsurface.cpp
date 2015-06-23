@@ -56,6 +56,7 @@ QT_BEGIN_NAMESPACE
 QWaylandExtendedSurface::QWaylandExtendedSurface(QWaylandWindow *window)
     : QtWayland::qt_extended_surface(window->display()->windowExtension()->get_extended_surface(window->object()))
     , m_window(window)
+    , m_exposed(true)
 {
 }
 
@@ -108,6 +109,16 @@ void QWaylandExtendedSurface::extended_surface_set_generic_property(const QStrin
 void QWaylandExtendedSurface::extended_surface_close()
 {
     QWindowSystemInterface::handleCloseEvent(m_window->window());
+}
+
+void QWaylandExtendedSurface::extended_surface_surface_exposure(int32_t exposure)
+{
+    if (exposure != m_exposed) {
+        m_exposed = exposure == QT_EXTENDED_SURFACE_EXPOSURE_EXPOSED;
+        QWindowSystemInterface::handleExposeEvent(m_window->window(),
+                                                  m_exposed ? QRect(QPoint(), m_window->geometry().size())
+                                                            : QRegion());
+    }
 }
 
 Qt::WindowFlags QWaylandExtendedSurface::setWindowFlags(Qt::WindowFlags flags)

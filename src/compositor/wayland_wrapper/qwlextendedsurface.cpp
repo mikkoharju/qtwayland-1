@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 namespace QtWayland {
 
 SurfaceExtensionGlobal::SurfaceExtensionGlobal(Compositor *compositor)
-    : QtWaylandServer::qt_surface_extension(compositor->wl_display(), 2)
+    : QtWaylandServer::qt_surface_extension(compositor->wl_display(), 3)
 {
 }
 
@@ -99,6 +99,10 @@ bool ExtendedSurface::runOperation(QWaylandSurfaceOp *op)
             return true;
         case QWaylandSurfaceOp::SetVisibility:
             setVisibility(static_cast<QWaylandSurfaceSetVisibilityOp *>(op)->visibility());
+            return true;
+        case QWaylandSurfaceOp::SetExposed:
+            send_surface_exposure(static_cast<QWaylandSurfaceSetExposedOp *>(op)->is_exposed() ? QT_EXTENDED_SURFACE_EXPOSURE_EXPOSED
+                                                                                               : QT_EXTENDED_SURFACE_EXPOSURE_OBSCURED);
             return true;
         default:
             break;

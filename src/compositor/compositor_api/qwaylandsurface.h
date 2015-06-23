@@ -93,6 +93,7 @@ class Q_COMPOSITOR_EXPORT QWaylandSurface : public QObject
     Q_PROPERTY(QWindow::Visibility visibility READ visibility WRITE setVisibility NOTIFY visibilityChanged)
     Q_PROPERTY(QWaylandSurface *transientParent READ transientParent)
     Q_PROPERTY(QPointF transientOffset READ transientOffset)
+    Q_PROPERTY(bool exposed READ isExposed WRITE setExposed NOTIFY exposedChanged)
 
     Q_ENUMS(WindowFlag WindowType)
     Q_FLAGS(WindowFlag WindowFlags)
@@ -189,6 +190,9 @@ public:
 
     static QWaylandSurface *fromResource(::wl_resource *resource);
 
+    bool isExposed() const;
+    void setExposed(bool exposed);
+
 public slots:
     void updateSelection();
 
@@ -214,7 +218,7 @@ Q_SIGNALS:
     void visibilityChanged();
     void pong();
     void surfaceDestroyed();
-
+    void exposedChanged();
     void configure(bool hasBuffer);
     void redraw();
 
